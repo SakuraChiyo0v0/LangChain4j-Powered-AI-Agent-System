@@ -1,0 +1,101 @@
+server:
+  port: 8000
+
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/spring_ai
+    username: root
+    password: 1234
+    hikari:
+      maximum-pool-size: 60
+      minimum-idle: 5
+      connection-test-query: SELECT 1
+      connection-init-sql: SELECT 1
+  data:
+    redis:
+      # 地址
+      host: localhost
+      # 端口，默认为6379
+      port: 6379
+      # 数据库索引
+      database: 2
+      # 密码
+      password:
+      # 连接超时时间
+      timeout: 10s
+      lettuce:
+        pool:
+          # 连接池中的最小空闲连接
+          min-idle: 0
+          # 连接池中的最大空闲连接
+          max-idle: 8
+          # 连接池的最大数据库连接数
+          max-active: 8
+          # #连接池最大阻塞等待时间（使用负值表示没有限制）
+          max-wait: -1ms
+  mail:
+    username: 输入你的邮箱
+    password: 邮箱的api码 #邮箱的登录密码 非授权码
+    host: smtp.qq.com
+    port: 587
+    default-encoding: UTF-8
+    properties:
+      mail:
+        #配置SSL 加密工厂
+        smtp:
+          starttls:
+            required: true
+          ssl:
+            #本地测试，先放开ssl
+            enable: false
+            required: false
+          #开启debug模式，这样邮件发送过程的日志会在控制台打印出来，方便排查错误
+        debug: false
+mybatis:
+  mapper-locations: classpath:mapper/*.xml
+
+langchain4j:
+  community:
+    dashscope:
+      # LLM
+      chat-model:
+        api-key: ${DASHSCOPE_API_KEY}
+        model-name: qwen-max
+        temperature: 0.7
+      # Reasoning LLM
+      streaming-chat-model:
+        api-key: ${DASHSCOPE_API_KEY}
+        model-name: qwq-plus-latest
+      # i2t-model
+      vision-model:
+        api-key: ${DASHSCOPE_API_KEY}
+        model-name: qvq-max
+      # embedding-model
+      embedding-model:
+        api-key: ${DASHSCOPE_API_KEY}
+        model-name: text-embedding-v3
+        dimensions: 1024  # 显式指定维度
+      # t2i-model
+      image-model:
+        api-key: ${DASHSCOPE_API_KEY}
+        model-name: wanx2.1-t2i-turbo
+
+
+#  ollama:
+#    embedding-model:
+#      base-url: http://127.0.0.1:11434
+#      model-name: all-minilm:33m
+
+
+pgvector:
+  database: pgvector
+  host: 127.0.0.1
+  port : 54333
+  user: pgvector
+  password: pgvector
+  table: vectors_db
+
+
+search:
+  apiKey: 改成你的search-apiKey
+  engine: baidu
